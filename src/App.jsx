@@ -1,122 +1,54 @@
 import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
 import './App.css'
 
+const photos = {
+  hero: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1500&q=85',
+  story: 'https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=1000&q=85',
+  beans: 'https://images.unsplash.com/photo-1559525839-b184a4d698c7?auto=format&fit=crop&w=900&q=85',
+  cup: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=85',
+  pastry: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=85',
+  pour: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=900&q=85',
+}
+
+const menu = [
+  { title: 'Hot coffee', items: [['Ceremony Espresso', 'Red fruit, cacao, a honeyed finish', 'ETB 180'], ['Greenhouse Cappuccino', 'Double espresso, silky steamed milk', 'ETB 240'], ['Honey Oat Latte', 'Local honey, oat milk, cinnamon', 'ETB 290'], ['Slow Bar Pour-over', 'Rotating single origin, brewed to order', 'ETB 320']] },
+  { title: 'Cold coffee', items: [['Garden Cold Brew', '18-hour steep, bright and chocolatey', 'ETB 280'], ['Iced Shakerato', 'Espresso shaken until soft and frothy', 'ETB 240'], ['Orange Blossom Tonic', 'Espresso, citrus, botanical tonic', 'ETB 320']] },
+  { title: 'Tea & other drinks', items: [['Spiced Shai', 'Black tea, warming spices, fresh milk', 'ETB 190'], ['Mint & Lemongrass', 'A soothing garden infusion', 'ETB 180'], ['Drinking Chocolate', 'Dark cocoa, gently steamed milk', 'ETB 260']] },
+  { title: 'Pastries & snacks', items: [['Morning Bun', 'Flaky layers, cardamom sugar', 'ETB 210'], ['Banana Bread', 'Walnut crumb, baked in-house', 'ETB 190'], ['Roasted Tomato Toast', 'Sourdough, soft herbs, whipped feta', 'ETB 360']] },
+]
+
+const services = [
+  ['01', 'Stay awhile', 'A calm, leafy room for slow mornings, good conversation, and a second cup.'],
+  ['02', 'Coffee to go', 'Thoughtfully made drinks for the walk, commute, or the rest of your day.'],
+  ['03', 'Gather around', 'Coffee service and pastry boards for small meetings and celebrations.'],
+  ['04', 'A place to focus', 'Comfortable tables, generous daylight, and complimentary Wi-Fi.'],
+]
+
+function Brand({ light = false }) {
+  return <a className={`brand ${light ? 'brand-light' : ''}`} href="#home" aria-label="Greenhouse Coffee home"><svg viewBox="0 0 52 52" aria-hidden="true"><path d="M12 26h25v15H12zM37 29h4a5 5 0 0 1 0 10h-4M16 22c-5-5 3-6 0-11m9 11c-5-5 3-6 0-11m9 11c-5-5 3-6 0-11"/><path d="M24 31c-8-8-13-5-12 1 1 5 7 6 12-1zm1 1c8-8 13-5 12 1-1 5-7 6-12-1z"/></svg><span>Greenhouse <b>Coffee</b></span></a>
+}
+
+function Smoke({ className = '' }) { return <svg className={`smoke ${className}`} viewBox="0 0 220 320" fill="none" aria-hidden="true"><path d="M115 312C32 259 188 223 109 166 36 113 198 89 119 7M150 315C78 261 217 230 153 177 88 123 218 96 164 40M75 314C-3 258 137 221 70 172 8 126 143 98 86 34" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg> }
+
+function Header() {
+  const [open, setOpen] = useState(false)
+  const links = [['About', '#about'], ['Menu', '#menu'], ['Gallery', '#gallery'], ['Services', '#services'], ['Contact', '#contact']]
+  return <header className="header"><Brand /><button className="menu-toggle" aria-expanded={open} aria-label={open ? 'Close navigation' : 'Open navigation'} onClick={() => setOpen(!open)}><span/><span/></button><nav className={open ? 'nav nav-open' : 'nav'} aria-label="Main navigation">{links.map(([label, href]) => <a key={label} href={href} onClick={() => setOpen(false)}>{label}</a>)}<a className="nav-visit" href="#contact" onClick={() => setOpen(false)}>Visit us <span>↗</span></a></nav></header>
+}
+
+function SectionIntro({ eyebrow, title, children, light = false }) { return <div className={`section-intro ${light ? 'intro-light' : ''}`}><span className="eyebrow">{eyebrow}</span><h2>{title}</h2>{children && <p>{children}</p>}</div> }
+
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+  return <><Header /><main>
+    <section className="hero" id="home"><div className="hero-copy"><span className="eyebrow">A little green in the everyday</span><h1>Good coffee.<br/><em>Room to breathe.</em></h1><p>A neighborhood coffee house where rich Ethiopian coffee, living plants, and unhurried moments meet.</p><div className="hero-actions"><a className="button button-dark" href="#menu">Explore our menu <span>↗</span></a><a className="text-link" href="#about">Our story <span>↓</span></a></div><div className="hero-note"><span className="note-dot"/> Rooted in Addis Ababa · Made for lingering</div></div><div className="hero-visual"><img src={photos.hero} alt="Freshly brewed coffee poured into a ceramic cup" fetchPriority="high"/><div className="hero-stamp"><span>Grown with care</span><b>Est. in<br/>the garden</b><i>✳</i></div><Smoke className="smoke-hero"/><div className="image-caption">Slow mornings, served daily <span>01 / 06</span></div></div><div className="hero-side">COFFEE · CALM · COMMUNITY</div></section>
+    <section className="ticker" aria-label="Our philosophy"><span>Rooted in nature</span><i>✳</i><span>Made with intention</span><i>✳</i><span>Best enjoyed slowly</span><i>✳</i><span>Rooted in nature</span></section>
+    <section className="about section-pad" id="about"><div className="about-photo"><img src={photos.story} alt="Warm neighborhood café interior filled with natural light" loading="lazy"/><div className="photo-label">A softer pace, in the heart of the city</div><Smoke className="smoke-about"/></div><div className="about-copy"><SectionIntro eyebrow="A place to put down roots" title={<>More than a cup.<br/><em>A feeling.</em></>}/><p className="lead">Greenhouse began with a simple thought: the best things grow when you give them time.</p><p>We bring together expressive Ethiopian coffees, thoughtful food, and the kind of welcome that makes a busy day feel a little lighter. Come for a quick cup; find yourself staying for the afternoon.</p><a className="text-link" href="#services">Get to know us <span>↗</span></a><div className="about-signature">Coffee with care <span>✳</span> room to grow</div></div></section>
+    <section className="menu-section section-pad" id="menu"><div className="menu-heading"><SectionIntro eyebrow="From our bar & kitchen" title={<>A menu with<br/><em>good roots.</em></>}>A few familiar comforts, a few new discoveries. Everything is made for taking your time.</SectionIntro><div className="menu-aside"><img src={photos.beans} alt="Roasted coffee beans ready for brewing" loading="lazy"/><span>Good things, made fresh every day</span></div></div><div className="menu-grid">{menu.map((group, idx) => <article className="menu-group" key={group.title}><div className="menu-group-title"><span>0{idx + 1}</span><h3>{group.title}</h3></div>{group.items.map(([name, desc, price]) => <div className="menu-item" key={name}><div><h4>{name}</h4><p>{desc}</p></div><span className="price">{price}</span></div>)}</article>)}</div><p className="menu-footnote">Our menu follows the seasons. Please ask our team about plant-based milk and today's bake.</p></section>
+    <section className="interlude"><img src={photos.cup} alt="Handmade coffee cup on a wooden café table" loading="lazy"/><div className="interlude-copy"><span className="eyebrow">A ritual worth keeping</span><p>“Let the day<br/>unfold <em>slowly.</em>”</p><span className="interlude-rule"/>Coffee, calm, and a little bit of green.</div><Smoke className="smoke-interlude"/></section>
+    <section className="services section-pad" id="services"><SectionIntro eyebrow="A little something for everyone" title={<>Come as you are.<br/><em>Stay as you like.</em></>}/><div className="service-grid">{services.map(([n, title, desc]) => <article className="service" key={n}><span>{n}</span><div><h3>{title}</h3><p>{desc}</p></div><b aria-hidden="true">↗</b></article>)}</div></section>
+    <section className="gallery-section section-pad" id="gallery"><div className="gallery-heading"><SectionIntro eyebrow="A peek inside" title={<>Life at the<br/><em>greenhouse.</em></>}/><p>Sun through the leaves, the sound of milk steaming, the first warm sip. A few things we love around here.</p></div><div className="gallery-grid"><figure className="gallery-large"><img src={photos.pour} alt="Barista carefully pouring freshly brewed coffee" loading="lazy"/><figcaption>The daily pour</figcaption></figure><figure className="gallery-tall"><img src={photos.pastry} alt="Freshly baked golden pastries ready for the morning" loading="lazy"/><figcaption>Something from the oven</figcaption></figure><figure className="gallery-small"><img src={photos.beans} alt="Close view of coffee beans" loading="lazy"/><figcaption>From bean to cup</figcaption></figure></div></section>
+    <section className="visit section-pad" id="contact"><div className="visit-copy"><SectionIntro eyebrow="Find your way here" title={<>Your table is<br/><em>waiting.</em></>} light/><p>Drop in for a cup, a bite, or a quiet corner. We’ll put the kettle on.</p><div className="visit-details"><div><span>Come find us</span><p>Garden Lane, Kazanchis<br/>Addis Ababa, Ethiopia <small>Fictional portfolio address</small></p></div><div><span>Say hello</span><p><a href="tel:+251911000000">+251 91 100 0000</a><br/><a href="mailto:hello@greenhousecoffee.example">hello@greenhousecoffee.example</a><small>Demo contact details</small></p></div></div><div className="hours"><span>Opening hours</span><p>Mon – Fri <b>7:30 – 19:00</b></p><p>Sat – Sun <b>8:00 – 20:00</b></p></div><a className="button button-cream" href="https://maps.google.com/?q=Kazanchis+Addis+Ababa" target="_blank" rel="noreferrer">Find us on the map <span>↗</span></a></div><div className="visit-map"><div className="map-art"><span className="map-road road-one"/><span className="map-road road-two"/><span className="map-road road-three"/><span className="map-green green-one"/><span className="map-green green-two"/><div className="map-pin"><span>✳</span></div><div className="map-label">Greenhouse Coffee<small>Kazanchis, Addis Ababa</small></div></div><span className="map-note">Illustrative map · fictional location</span></div></section>
+  </main><footer className="footer"><div className="footer-main"><div><Brand light/><p>A neighborhood coffee house for rich coffee, fresh air, and everyday moments that matter.</p></div><div className="footer-links"><span>Explore</span>{[['Our story','#about'],['The menu','#menu'],['Gallery','#gallery'],['Services','#services']].map(([a,b])=><a href={b} key={a}>{a}</a>)}</div><div className="footer-links"><span>Say hello</span><a href="mailto:hello@greenhousecoffee.example">Email us</a><a href="tel:+251911000000">Call the café</a><a href="#contact">Visit Kazanchis</a></div><div className="footer-social"><span>Follow the little things</span><a href="https://instagram.com/" target="_blank" rel="noreferrer">Instagram ↗</a><a href="https://facebook.com/" target="_blank" rel="noreferrer">Facebook ↗</a></div></div><div className="footer-bottom"><span>© 2026 Greenhouse Coffee · Fictional portfolio brand</span><a href="#home">Back to top ↑</a></div></footer></>
 }
 
 export default App
