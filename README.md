@@ -4,7 +4,7 @@ Greenhouse Coffee is a fictional coffee-house brand website built as a professio
 
 ## Project status
 
-The React and Vite foundation is in place. This milestone documents the product requirements and implementation plan; the current screen is still the Vite starter and the café website has not yet been implemented.
+The responsive single-page café website is implemented. It includes brand identity, menu, story, services, gallery, and fictional visit information.
 
 ## Tech stack
 
@@ -24,9 +24,9 @@ npm run dev
 
 Vite prints the local development URL in the terminal. To create a production build, run `npm run build`; to preview that build locally, run `npm run preview`. Run `npm run lint` for lint checks.
 
-## Planned experience
+## Experience
 
-The single-page informational site will include a welcoming home hero, About Us, coffee and food menu, gallery, services, location and contact details, and opening hours. It will use a warm, modern visual identity, original Greenhouse Coffee SVG branding, and freely licensed café imagery from Unsplash or Pexels with attribution or license details recorded as appropriate.
+The site pairs espresso, forest, sage, and cream colors with editorial typography, original botanical coffee branding, and restrained incense-smoke line art. Images are sourced from Unsplash; the address, phone number, and email are fictional portfolio demonstration details.
 
 ## Project documents
 
